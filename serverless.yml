@@ -1,0 +1,71 @@
+service: starwars-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    TABLE_NAME: FusionadosCache
+    WEATHER_API_KEY: c82fdda4ada042b8a79145454252103
+
+  iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action:
+              - dynamodb:Scan
+              - dynamodb:PutItem
+            Resource: 
+              - arn:aws:dynamodb:us-east-1:993939397323:table/FusionadosCache
+
+functions:
+  login:
+    handler: dist/src/handlers/loginHandler.login
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+
+  authorize:
+    handler: dist/src/handlers/authorizeHandler.authorizeHandler
+
+  getFusionados:
+    handler: dist/src/handlers/fusionados.getFusionados
+    events:
+      - http:
+          path: fusionados
+          method: get
+          cors: true  # Habilita CORS
+  storeData:
+    handler: dist/src/handlers/almacenar.storeData
+    events:
+      - http:
+          path: almacenar
+          method: post
+          cors: true  # Habilita CORS
+  getHistory:
+    handler: dist/src/handlers/historial.getHistory
+    events:
+      - http:
+          path: historial
+          method: get
+          cors: true  # Habilita CORS
+resources:
+  Resources:
+    FusionadosCache:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: FusionadosCache
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    ApiGateway:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: Starwars API
+    
