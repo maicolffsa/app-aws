@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // tests/handlers/fusionar.test.ts
-const fusionados_1 = require("../../../src/handlers/fusionados");
+const fusionadosHandler_1 = require("../../handlers/fusionadosHandler");
 // Mock de las funciones de las APIs
 jest.mock('../../src/services/swapi', () => ({
     obtenerPersonajes: jest.fn(),
@@ -40,7 +40,7 @@ describe('Test endpoint fusionar', () => {
             resource: '',
         };
         const context = {};
-        const result = yield (0, fusionados_1.getFusionados)(event, context);
+        const result = yield (0, fusionadosHandler_1.getFusionados)(event, context);
         expect(result.statusCode).toBe(200);
         expect(result.body).toContain('Datos fusionados correctamente');
         expect(result.body).toContain('Luke Skywalker');
@@ -62,7 +62,7 @@ describe('Test endpoint fusionar', () => {
             resource: '',
         };
         const context = {};
-        const result = yield (0, fusionados_1.getFusionados)(event, context);
+        const result = yield (0, fusionadosHandler_1.getFusionados)(event, context);
         expect(result.statusCode).toBe(500);
         expect(result.body).toContain('Error al fusionar los datos');
     }));

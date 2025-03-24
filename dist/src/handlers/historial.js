@@ -14,11 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHistory = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
+const authenticateJWT_1 = require("../middlewares/authenticateJWT"); // Ruta al middleware
 const dynamoDB = new aws_sdk_1.default.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.TABLE_NAME || "FusionadosCache";
 const getHistory = (event, context) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //authenticateJWT(event);
+        (0, authenticateJWT_1.authenticateJWT)(event);
         const result = yield dynamoDB.scan({ TableName: TABLE_NAME }).promise();
         return { statusCode: 200, body: JSON.stringify(result.Items) };
     }

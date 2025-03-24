@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // tests/handlers/almacenar.test.ts
-const almacenar_1 = require("../../../src/handlers/almacenar"); // Importamos el handler
+const almacenarHandler_1 = require("../../handlers/almacenarHandler"); // Importamos el handler
 // Mock de la función saveData (simulando que la base de datos responde)
 jest.mock('../../src/utils/db', () => ({
     saveData: jest.fn(),
@@ -35,7 +35,7 @@ describe('Test del endpoint almacenar', () => {
         };
         const context = {};
         // Llamamos al handler
-        const result = yield (0, almacenar_1.storeData)(event, context);
+        const result = yield (0, almacenarHandler_1.storeData)(event, context);
         // Verificamos que el status sea 200 y el mensaje de éxito esté presente
         expect(result.statusCode).toBe(200);
         expect(JSON.parse(result.body).message).toBe('Datos almacenados correctamente');
@@ -59,7 +59,7 @@ describe('Test del endpoint almacenar', () => {
         };
         const context = {};
         // Llamamos al handler
-        const result = yield (0, almacenar_1.storeData)(event, context);
+        const result = yield (0, almacenarHandler_1.storeData)(event, context);
         // Verificamos que el status sea 500 y el mensaje de error esté presente
         expect(result.statusCode).toBe(500);
         expect(JSON.parse(result.body).message).toBe('Error al guardar los datos');

@@ -13,9 +13,10 @@ exports.getFusionados = void 0;
 const swapiService_1 = require("../services/swapiService");
 const weatherService_1 = require("../services/weatherService");
 const planetaService_1 = require("../services/planetaService");
+const authenticateJWT_1 = require("../middlewares/authenticateJWT"); // Ruta al middleware
 const getFusionados = (event, context) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // authenticateJWT(event);
+        (0, authenticateJWT_1.authenticateJWT)(event);
         const planetasDelSistemaSolar = [
             { nombre: "Mercurio", tipo: "Rocoso", radio: 2439.7, distanciaSol: 57.91 },
             { nombre: "Venus", tipo: "Rocoso", radio: 6051.8, distanciaSol: 108.2 },

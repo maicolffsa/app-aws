@@ -1,21 +1,27 @@
-import jwt from 'jsonwebtoken';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import jwt from "jsonwebtoken";
 
-// Clave secreta para verificar el JWT
-const secretKey = 'supersecre34434434343434to'; // Cambia esto a una clave más segura en producción
+const JWT_SECRET = process.env.JWT_SECRET || "secreto";
 
-// Middleware para verificar JWT
-export const authenticateJWT = (event: any) => {
+export const authenticateJWT = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult | null> => {
   const token = event.headers.Authorization || event.headers.authorization;
 
   if (!token) {
-    throw new Error('Token no proporcionado');
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ message: "No autorizado, token requerido" }),
+    };
   }
 
   try {
-    const decoded = jwt.verify(token, secretKey);
-    return decoded;
+    jwt.verify(token.replace("Bearer ", ""), JWT_SECRET);
+    return null;
   } catch (error) {
-    throw new Error('Token no válido');
+    return {
+      statusCode: 403,
+      body: JSON.stringify({ message: "Token inválido" }),
+    };
   }
 };
-

@@ -15,11 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.storeData = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const uuid_1 = require("uuid");
+const authenticateJWT_1 = require("../middlewares/authenticateJWT"); // Ruta al middleware
 const dynamoDB = new aws_sdk_1.default.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.TABLE_NAME || "FusionadosCache";
 const storeData = (event, context) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //authenticateJWT(event);
+        (0, authenticateJWT_1.authenticateJWT)(event);
         if (!event.body) {
             return { statusCode: 400, body: JSON.stringify({ message: "Datos inválidos" }) };
         }

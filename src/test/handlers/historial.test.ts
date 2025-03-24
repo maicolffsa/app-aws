@@ -1,9 +1,9 @@
 // tests/handlers/historial.test.ts
-import { getHistory as handler } from '../../../src/handlers/historial';
+import { getHistory as handler } from '../../handlers/historialHandler';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
 // Mock de la base de datos
-jest.mock('../../src/utils/db', () => ({
+jest.mock('../../src/config/db', () => ({
   obtenerHistorial: jest.fn(),
 }));
 

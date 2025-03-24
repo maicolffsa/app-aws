@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // tests/handlers/historial.test.ts
-const historial_1 = require("../../../src/handlers/historial");
+const historialHandler_1 = require("../../handlers/historialHandler");
 // Mock de la base de datos
-jest.mock('../../src/utils/db', () => ({
+jest.mock('../../src/config/db', () => ({
     obtenerHistorial: jest.fn(),
 }));
 describe('Test endpoint obtener historial', () => {
@@ -35,7 +35,7 @@ describe('Test endpoint obtener historial', () => {
             resource: '',
         };
         const context = {};
-        const result = yield (0, historial_1.getHistory)(event, context);
+        const result = yield (0, historialHandler_1.getHistory)(event, context);
         expect(result.statusCode).toBe(200);
         expect(result.body).toContain('Historial de datos obtenido correctamente');
         expect(result.body).toContain('Luke Skywalker');
@@ -56,7 +56,7 @@ describe('Test endpoint obtener historial', () => {
             resource: '',
         };
         const context = {};
-        const result = yield (0, historial_1.getHistory)(event, context);
+        const result = yield (0, historialHandler_1.getHistory)(event, context);
         expect(result.statusCode).toBe(500);
         expect(result.body).toContain('Error al obtener el historial de datos');
     }));

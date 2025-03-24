@@ -15,10 +15,22 @@ provider:
             Action:
               - dynamodb:Scan
               - dynamodb:PutItem
+              - "dynamodb:GetItem"
+              - "dynamodb:Query"
             Resource: 
               - arn:aws:dynamodb:us-east-1:993939397323:table/FusionadosCache
+              - arn:aws:dynamodb:us-east-1:993939397323:table/User
 
 functions:
+
+  register:
+    handler: dist/src/handlers/registerHandler.register
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+
   login:
     handler: dist/src/handlers/loginHandler.login
     events:
@@ -27,36 +39,54 @@ functions:
           method: post
           cors: true
 
-  authorize:
-    handler: dist/src/handlers/authorizeHandler.authorizeHandler
-
   getFusionados:
-    handler: dist/src/handlers/fusionados.getFusionados
+    handler: dist/src/handlers/fusionadosHandler.getFusionados
     events:
       - http:
           path: fusionados
           method: get
           cors: true  # Habilita CORS
+  
   storeData:
-    handler: dist/src/handlers/almacenar.storeData
+    handler: dist/src/handlers/almacenarHandler.storeData
     events:
       - http:
           path: almacenar
           method: post
           cors: true  # Habilita CORS
+  
   getHistory:
-    handler: dist/src/handlers/historial.getHistory
+    handler: dist/src/handlers/historialHandler.getHistory
     events:
       - http:
           path: historial
           method: get
           cors: true  # Habilita CORS
+  
+  apiDocs:
+    handler: dist/src/handlers/swaggerJsonHandler.getSwaggerJson
+    events:
+      - http:
+          path: api-docs
+          method: get
+  
 resources:
   Resources:
     FusionadosCache:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: FusionadosCache
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    User:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: User
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

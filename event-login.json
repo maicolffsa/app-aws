@@ -1,3 +1,9 @@
 {
-    "body": "{\"username\": \"luke\", \"password\": \"luke123\"}"
-  }
+    "body": [
+        {
+            "username": "luke",
+            "password": "luke123"
+        }
+    ]
+    
+}

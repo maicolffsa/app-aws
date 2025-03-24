@@ -1,5 +1,5 @@
 // tests/handlers/fusionar.test.ts
-import { getFusionados as handler } from '../../../src/handlers/fusionados';
+import { getFusionados as handler } from '../../handlers/fusionadosHandler';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
 // Mock de las funciones de las APIs

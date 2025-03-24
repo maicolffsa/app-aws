@@ -13,28 +13,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-// Simulando una base de datos de usuarios
-const usuarios = [
-    { id: 1, username: 'luke', password: 'luke123' }, // Contraseña: "luke123"
-];
-// Definir la clave secreta para firmar el JWT
-const secretKey = 'supersecre34434434343434to'; // Cambia esto a una clave más segura en producción
-// Función para manejar el login
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const db_1 = __importDefault(require("../config/db"));
+const jwt_1 = require("../utils/jwt");
 const login = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password } = JSON.parse(event.body);
-    console.log("user: ", username);
-    const usuario = usuarios.find(u => u.username === username);
-    if (!usuario) {
-        throw new Error('Usuario no encontrado');
+    try {
+        const { username, password } = JSON.parse(event.body || "{}");
+        if (!username || !password) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Usuario y contraseña requeridos" }),
+            };
+        }
+        const result = yield db_1.default
+            .get({
+            TableName: process.env.USERS_TABLE || "User",
+            Key: { id: username },
+        })
+            .promise();
+        const user = result.Item;
+        if (!user || !(yield bcryptjs_1.default.compare(password, user.password))) {
+            return {
+                statusCode: 401,
+                body: JSON.stringify({ message: "Credenciales inválidas" }),
+            };
+        }
+        const token = (0, jwt_1.generateToken)(username);
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: "Login exitoso", token }),
+        };
     }
-    // Validar la contraseña
-    const passwordMatch = usuarios.find(u => u.password === password);
-    if (!passwordMatch) {
-        throw new Error('Contraseña incorrecta');
+    catch (error) {
+        console.error("Error en login:", error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: error }),
+        };
     }
-    // Crear un token JWT
-    const token = jsonwebtoken_1.default.sign({ id: usuario.id, username: usuario.username }, secretKey, { expiresIn: '1h' });
-    return token;
 });
 exports.login = login;

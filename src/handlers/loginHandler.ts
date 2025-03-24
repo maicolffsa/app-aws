@@ -1,35 +1,49 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import bcrypt from "bcryptjs";
+import dynamoDb from "../config/db";
+import { generateToken } from "../utils/jwt";
+import { User } from "../models/User";
 
-// Simulando una base de datos de usuarios
-const usuarios = [
-  { id: 1, username: 'luke', password: 'luke123' }, // Contraseña: "luke123"
-];
+export const login = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const { username, password } = JSON.parse(event.body || "{}") as User;
 
-// Definir la clave secreta para firmar el JWT
-const secretKey = 'supersecre34434434343434to'; // Cambia esto a una clave más segura en producción
+    if (!username || !password) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Usuario y contraseña requeridos" }),
+      };
+    }
 
-// Función para manejar el login
-export const login = async (event: { body: string; }) => {
+    const result = await dynamoDb
+      .get({
+        TableName: process.env.USERS_TABLE! || "User",
+        Key: { id: username },
+      })
+      .promise();
 
-  const { username, password } = JSON.parse(event.body);
-  console.log("user: ",username)
-  const usuario = usuarios.find(u => u.username === username);
+    const user = result.Item as User;
 
-  if (!usuario) {
-    throw new Error('Usuario no encontrado');
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ message: "Credenciales inválidas" }),
+      };
+    }
+
+    const token = generateToken(username);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Login exitoso", token }),
+    };
+  } catch (error) {
+    console.error("Error en login:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: error }),
+    };
   }
-
-  // Validar la contraseña
-  const passwordMatch = usuarios.find(u => u.password=== password);
-
-
-  if (!passwordMatch) {
-    throw new Error('Contraseña incorrecta');
-  }
-
-  // Crear un token JWT
-  const token = jwt.sign({ id: usuario.id, username: usuario.username }, secretKey, { expiresIn: '1h' });
-
-  return token;
 };

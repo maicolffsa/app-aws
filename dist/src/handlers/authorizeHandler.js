@@ -19,7 +19,7 @@ const authorizeHandler = (event) => __awaiter(void 0, void 0, void 0, function* 
     var _a;
     const token = (_a = event.headers.Authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1]; // Obtener el token de Authorization header
     // Verifica si la variable de entorno JWT_SECRET_KEY está definida
-    const secretKey = process.env.JWT_SECRET;
+    const secretKey = "supersecre34434434343434to";
     if (!secretKey) {
         return {
             statusCode: 500,

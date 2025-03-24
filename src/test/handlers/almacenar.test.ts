@@ -1,5 +1,5 @@
 // tests/handlers/almacenar.test.ts
-import { storeData as handler } from '../../../src/handlers/almacenar'; // Importamos el handler
+import { storeData as handler } from '../../handlers/almacenarHandler'; // Importamos el handler
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
 // Mock de la función saveData (simulando que la base de datos responde)
