@@ -33,9 +33,6 @@ Esta API combina datos de Star Wars con información de otra API pública, propo
     "password": "maytheforce"
 }
 ✅ Ejemplo de Response
-json
-Copiar
-Editar
 {
     "message": "Usuario registrado con éxito"
 }
@@ -45,17 +42,11 @@ Función: starwars-api-dev-login
 Método: POST
 Descripción: Autentica a un usuario y devuelve un JWT.
 📝 Ejemplo de Request
-json
-Copiar
-Editar
 {
     "username": "luke",
     "password": "maytheforce"
 }
 ✅ Ejemplo de Response
-json
-Copiar
-Editar
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }
@@ -90,14 +81,9 @@ Los siguientes endpoints requieren un JWT válido en el encabezado Authorization
 /getHistory
 Ejemplo de uso del token en el header:
 
-json
-Copiar
-Editar
 {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR..."
 }
 📜 Licencia
 Proyecto desarrollado por Felix Sullon, Ing. Sistemas.
 
-Copiar
-Editar
