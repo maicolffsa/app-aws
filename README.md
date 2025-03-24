@@ -50,24 +50,28 @@ Descripción: Autentica a un usuario y devuelve un JWT.
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }
+
 3️⃣ Obtener Datos Fusionados 🔒
 Endpoint: /getFusionados
 Función: starwars-api-dev-getFusionados
 Método: GET
 Descripción: Fusiona datos de SWAPI con otra API externa y los retorna.
 Seguridad: Protegido con JWT
+
 4️⃣ Almacenar Datos 🔒
 Endpoint: /storeData
 Función: starwars-api-dev-storeData
 Método: POST
 Descripción: Almacena datos personalizados en la base de datos.
 Seguridad: Protegido con JWT
+
 5️⃣ Consultar Historial 🔒
 Endpoint: /getHistory
 Función: starwars-api-dev-getHistory
 Método: GET
 Descripción: Recupera el historial de datos almacenados por el usuario.
 Seguridad: Protegido con JWT
+
 6️⃣ Documentación de la API
 Endpoint: /apiDocs
 Función: starwars-api-dev-apiDocs
