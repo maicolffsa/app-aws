@@ -36,7 +36,7 @@ Esta API combina datos de Star Wars con información de otra API pública, propo
 {
     "message": "Usuario registrado con éxito"
 }
-
+``` 
 ### 2️⃣ Inicio de Sesión 
 - **Endpoint:** `/login`
 - **Función:** `starwars-api-dev-login`
@@ -53,35 +53,37 @@ Esta API combina datos de Star Wars con información de otra API pública, propo
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }
+```
 
 ### 3️⃣ Obtener Datos Fusionados 🔒
-- Endpoint: /getFusionados
-- Función: starwars-api-dev-getFusionados
-- Método: GET
-- Descripción: Fusiona datos de SWAPI con otra API externa y los retorna.
-- Seguridad: Protegido con JWT
+- **Endpoint:** `/getFusionados`
+- **Función:** `starwars-api-dev-getFusionados`
+- **Método:** `GET`
+- **Descripción:** Fusiona datos de SWAPI con otra API externa y los retorna.
+- **Seguridad:** Protegido con JWT
 
 ### 4️⃣ Almacenar Datos 🔒
-- Endpoint: /storeData
-- Función: starwars-api-dev-storeData
-- Método: POST
-- Descripción: Almacena datos personalizados en la base de datos.
-- Seguridad: Protegido con JWT
+- **Endpoint:** `/storeData`
+- **Función:** `starwars-api-dev-storeData`
+- **Método:** `POST`
+- **Descripción:** Almacena datos personalizados en la base de datos.
+- **Seguridad:** Protegido con JWT
 
 ### 5️⃣ Consultar Historial 🔒
-- Endpoint: /getHistory
-- Función: starwars-api-dev-getHistory
-- Método: GET
-- Descripción: Recupera el historial de datos almacenados por el usuario.
-- Seguridad: Protegido con JWT
+- **Endpoint:** `/getHistory`
+- **Función:** `starwars-api-dev-getHistory`
+- **Método:** `GET`
+- **Descripción:** Recupera el historial de datos almacenados por el usuario.
+- **Seguridad:** Protegido con JWT
 
-6️⃣ Documentación de la API
-- Endpoint: /apiDocs
-- Función: starwars-api-dev-apiDocs
-- Método: GET
-- Descripción: Muestra la documentación interactiva generada con Swagger.
+### 6️⃣ Documentación de la API
+- **Endpoint:** `/apiDocs`
+- **Función:** `starwars-api-dev-apiDocs`
+- **Método:** `GET`
+- **Descripción:** Muestra la documentación interactiva generada con Swagger.
 - 🔒 Seguridad en los Endpoints
-- Los siguientes endpoints requieren un JWT válido en el encabezado Authorization:
+
+Los siguientes endpoints requieren un JWT válido en el encabezado Authorization:
 
 #### /getFusionados
 #### /storeData
@@ -93,6 +95,7 @@ Esta API combina datos de Star Wars con información de otra API pública, propo
 {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR..."
 }
+```
 
 ### 📜 Licencia
 #### Proyecto desarrollado por Felix Sullon, Ing. Sistemas.
